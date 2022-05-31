@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "description": "A bi-directional map",
   "main": "dist/index.js",
+  "module": "dist/esm/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc && tsc --module esnext --lib esnext --outDir dist/esm",
     "test": "vitest"
   },
   "files": [
