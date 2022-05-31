@@ -1,65 +1,19 @@
 {
-  "name": "bidi-map",
-  "version": "0.1.1",
-  "description": "A library that extends native ES6 Map to bi-directional map.",
-  "keywords": [
-    "bidirectional",
-    "bi-directional",
-    "bidi",
-    "bi",
-    "directional",
-    "map",
-    "es6",
-    "reverse",
-    "reverse-map",
-    "reversemap",
-    "exists",
-    "getKeyOf",
-    "getKeysOf",
-    "key",
-    "value",
-    "keys"
-  ],
-  "main": "./index.js",
-  "module": "./lib/bidi-map.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/moshest/bidi-map.git"
-  },
-  "bugs": "https://github.com/moshest/bidi-map/issues",
+  "name": "@amilajack/bidi-map",
+  "version": "0.0.1",
+  "description": "A bi-directional map",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "mocha",
-    "cover": "babel-node node_modules/.bin/istanbul cover ./node_modules/mocha/bin/_mocha --check-coverage --report lcovonly -- -R spec",
-    "clean": "rm -rf lib && rm -rf coverage && rm README.md",
-    "build": "mkdir -p lib && npm run babel && npm run docs",
-    "babel": "babel src/bidi-map.js --out-file lib/bidi-map.js",
-    "docs": "jsdoc2md -t jsdoc2md/README.hbs lib/*.js > README.md",
-    "precommit": "lint-staged",
-    "prepush": "npm test"
+    "build": "tsc",
+    "test": "vitest"
   },
-  "author": "Moshe Simantov <hi@moshesimantov.com> (http://www.moshesimantov.com)",
-  "license": "Apache-2.0",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.24.1",
-    "coveralls": "^2.13.1",
-    "eslint": "^3.19.0",
-    "eslint-config-airbnb-base": "^11.2.0",
-    "eslint-config-prettier": "^2.3.0",
-    "eslint-import-resolver-node": "^0.3.1",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-prettier": "^2.1.2",
-    "husky": "^0.14.3",
-    "istanbul": "^0.4.5",
-    "jsdoc-to-markdown": "^3.0.0",
-    "mocha": "^3.0.0",
-    "prettier": "^1.5.3"
-  },
-  "engines": {
-    "node": ">=6.11"
-  },
-  "dependencies": {
-    "remove": "^0.1.5"
+    "@tsconfig/node18": "^1.0.0",
+    "@types/node": "^17.0.36",
+    "typescript": "^4.7.2",
+    "vitest": "^0.13.0"
   }
 }

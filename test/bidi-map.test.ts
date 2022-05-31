@@ -14,66 +14,56 @@
  * limitations under the License.
  */
 
-import assert from 'assert';
-import BidiMap from '../';
+import assert from "assert";
+import { describe, it } from "vitest";
+import BidiMap from "../src";
 
-const { describe, it } = global;
-
-describe('BidMap', () => {
-  it('README usage', () => {
-    const bidiMap = new BidiMap([[1, 'test'], ['foo', 'bar']]);
-
-    assert(bidiMap instanceof BidiMap);
-    assert(bidiMap instanceof Map);
-
-    assert.equal(bidiMap.get(1), 'test');
-    assert.equal(bidiMap.has('foo'), true);
-    assert.equal(bidiMap.exists('bar'), true);
-    assert.equal(bidiMap.getKeyOf('test'), 1);
-
-    const key = Symbol('unique');
-    bidiMap.set(key, 'test');
-    assert.deepEqual(bidiMap.getKeysOf('test'), [1, key]);
-  });
-
-  describe('#constructor', () => {
-    it('should create with no arguments instance of Map', () => {
+describe("BidMap", () => {
+  describe("#constructor", () => {
+    it("should create with no arguments instance of Map", () => {
       const bidiMap = new BidiMap();
 
       assert(bidiMap instanceof BidiMap);
       assert(bidiMap instanceof Map);
     });
 
-    it('should create with iterable', () => {
-      const bidiMap = new BidiMap([[1, 'foo'], [5, 'bar']]);
+    it("should create with iterable", () => {
+      const bidiMap = new BidiMap<number | string>([
+        [1, "foo"],
+        [5, "bar"],
+      ]);
 
       assert.equal(bidiMap.has(1), true);
       assert.equal(bidiMap.has(5), true);
       assert.equal(bidiMap.has(2), false);
 
-      assert.equal(bidiMap.get(1), 'foo');
-      assert.equal(bidiMap.get(5), 'bar');
+      assert.equal(bidiMap.get(1), "foo");
+      assert.equal(bidiMap.get(5), "bar");
       assert.equal(bidiMap.get(2), undefined);
     });
 
-    it('should throw when call as a function', () => {
+    it("should throw when call as a function", () => {
+      // @ts-expect-error
       assert.throws(() => BidiMap(), TypeError);
     });
   });
 
-  describe('#count', () => {
-    it('should ignore duplications', () => {
-      const bidiMap = new BidiMap([[1, 'foo'], [5, 'foo']]);
+  describe("#count", () => {
+    it("should ignore duplications", () => {
+      const bidiMap = new BidiMap<number | string>([
+        [1, "foo"],
+        [5, "foo"],
+      ]);
 
       assert.equal(bidiMap.count, 1);
     });
   });
 
-  describe('#set()', () => {
-    it('should set a value', () => {
+  describe("#set()", () => {
+    it("should set a value", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -85,11 +75,11 @@ describe('BidMap', () => {
     });
   });
 
-  describe('#exists()', () => {
-    it('should work only with exact value', () => {
+  describe("#exists()", () => {
+    it("should work only with exact value", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -98,11 +88,11 @@ describe('BidMap', () => {
     });
   });
 
-  describe('#getKeyOf()', () => {
-    it('should work only with exact value', () => {
+  describe("#getKeyOf()", () => {
+    it("should work only with exact value", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -110,11 +100,11 @@ describe('BidMap', () => {
       assert.equal(bidiMap.getKeyOf({}), undefined);
     });
 
-    it('should return first key', () => {
+    it("should return first key", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
-      const key2 = 'bar';
+      const key = "foo";
+      const key2 = "bar";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -127,11 +117,11 @@ describe('BidMap', () => {
     });
   });
 
-  describe('#getKeysOf()', () => {
-    it('should work only with exact value', () => {
+  describe("#getKeysOf()", () => {
+    it("should work only with exact value", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -139,11 +129,11 @@ describe('BidMap', () => {
       assert.deepEqual(bidiMap.getKeysOf({}), []);
     });
 
-    it('should return all keys', () => {
+    it("should return all keys", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
-      const key2 = 'bar';
+      const key = "foo";
+      const key2 = "bar";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -156,11 +146,11 @@ describe('BidMap', () => {
     });
   });
 
-  describe('#delete()', () => {
-    it('should delete value', () => {
+  describe("#delete()", () => {
+    it("should delete value", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -178,11 +168,11 @@ describe('BidMap', () => {
       assert.equal(bidiMap.getKeyOf(value), undefined);
     });
 
-    it('should delete only one key', () => {
+    it("should delete only one key", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
-      const key2 = 'bar';
+      const key = "foo";
+      const key2 = "bar";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
@@ -199,11 +189,11 @@ describe('BidMap', () => {
     });
   });
 
-  describe('#clear()', () => {
-    it('should clear all values', () => {
+  describe("#clear()", () => {
+    it("should clear all values", () => {
       const bidiMap = new BidiMap();
 
-      const key = 'foo';
+      const key = "foo";
       const value = {};
 
       assert.equal(bidiMap.set(key, value), bidiMap);
