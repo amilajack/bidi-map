@@ -1,0 +1,31 @@
+# Only release once main Test workflow passed
+# See https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_run
+name: release
+on:
+  workflow_run:
+    workflows: [test]
+    branches: [main]
+    types: [completed]
+jobs:
+  # Automated npm publish
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    name: release
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Install Node.js, NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+      - name: npm install
+        run: npm ci
+      - name: build
+        run: npm run build
+      - name: release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

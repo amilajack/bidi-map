@@ -1,7 +1,6 @@
 name: test
 on: [push]
 jobs:
-  # Test entire monorepo
   test:
     runs-on: ubuntu-latest
     steps:
